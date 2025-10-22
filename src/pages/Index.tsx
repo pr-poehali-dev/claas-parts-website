@@ -94,6 +94,7 @@ const sampleParts: Part[] = [
 export default function Index() {
   const [cart, setCart] = useState<{part: Part, quantity: number}[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeSection, setActiveSection] = useState('home');
 
   const addToCart = (part: Part) => {
     setCart(prev => {
@@ -126,7 +127,7 @@ export default function Index() {
       <div 
         className="relative bg-cover bg-center py-32"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('https://cdn.poehali.dev/projects/23ef561f-b54d-4239-8a99-bcfeea709a10/files/cab1dd30-ab4d-4e2c-83b3-8b8a650d21ba.jpg')`
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('https://cdn.poehali.dev/projects/23ef561f-b54d-4239-8a99-bcfeea709a10/files/ae8323ef-2702-476f-964d-74fbddd62304.jpg')`
         }}
       >
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
@@ -198,7 +199,7 @@ export default function Index() {
 
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-secondary">
               CLASS DETAIL
             </h1>
             <p className="text-xl mb-12 opacity-90">
@@ -208,7 +209,7 @@ export default function Index() {
             <div className="relative max-w-2xl mx-auto">
               <Input 
                 placeholder="Поиск по названию" 
-                className="h-14 pr-14 text-lg bg-white/95 backdrop-blur"
+                className="h-14 pr-14 text-lg bg-white/95 backdrop-blur text-foreground"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -223,108 +224,303 @@ export default function Index() {
         </div>
       </div>
 
-      <section className="py-16 bg-background">
+      <nav className="bg-white border-b sticky top-0 z-40 shadow-sm">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Запчасти CLAAS</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredParts.map(part => (
-              <Card key={part.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square bg-muted relative">
-                  <img 
-                    src={part.image} 
-                    alt={part.name}
-                    className="w-full h-full object-cover"
-                  />
-                  {!part.inStock && (
-                    <Badge variant="destructive" className="absolute top-2 right-2">
-                      Под заказ
-                    </Badge>
-                  )}
-                  {part.inStock && (
-                    <Badge className="absolute top-2 right-2 bg-primary">
-                      В наличии
-                    </Badge>
-                  )}
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-base">{part.name}</CardTitle>
-                  <p className="text-xs text-muted-foreground font-mono">{part.partNumber}</p>
-                  <Badge variant="outline" className="w-fit text-xs">{part.category}</Badge>
-                </CardHeader>
-                <CardFooter className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between w-full">
-                    <span className="text-xl font-bold text-primary">
-                      {part.price.toLocaleString('ru-RU')} ₽
-                    </span>
+          <div className="flex items-center justify-center gap-8 h-14">
+            <button 
+              onClick={() => setActiveSection('home')}
+              className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === 'home' ? 'text-primary border-b-2 border-primary' : 'text-foreground'}`}
+            >
+              Главная
+            </button>
+            <button 
+              onClick={() => setActiveSection('catalog')}
+              className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === 'catalog' ? 'text-primary border-b-2 border-primary' : 'text-foreground'}`}
+            >
+              Каталог товаров
+            </button>
+            <button 
+              onClick={() => setActiveSection('about')}
+              className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === 'about' ? 'text-primary border-b-2 border-primary' : 'text-foreground'}`}
+            >
+              О компании
+            </button>
+            <button 
+              onClick={() => setActiveSection('contacts')}
+              className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === 'contacts' ? 'text-primary border-b-2 border-primary' : 'text-foreground'}`}
+            >
+              Наши контакты
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {activeSection === 'home' && (
+        <>
+          <section className="py-16 bg-background">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">Популярные запчасти CLAAS</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {filteredParts.slice(0, 4).map(part => (
+                  <Card key={part.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="aspect-square bg-muted relative">
+                      <img 
+                        src={part.image} 
+                        alt={part.name}
+                        className="w-full h-full object-cover"
+                      />
+                      {!part.inStock && (
+                        <Badge variant="destructive" className="absolute top-2 right-2">
+                          Под заказ
+                        </Badge>
+                      )}
+                      {part.inStock && (
+                        <Badge className="absolute top-2 right-2 bg-primary">
+                          В наличии
+                        </Badge>
+                      )}
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-base">{part.name}</CardTitle>
+                      <p className="text-xs text-muted-foreground font-mono">{part.partNumber}</p>
+                      <Badge variant="outline" className="w-fit text-xs">{part.category}</Badge>
+                    </CardHeader>
+                    <CardFooter className="flex flex-col gap-3">
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-xl font-bold text-primary">
+                          {part.price.toLocaleString('ru-RU')} ₽
+                        </span>
+                      </div>
+                      <Button 
+                        onClick={() => addToCart(part)}
+                        disabled={!part.inStock}
+                        className="w-full"
+                      >
+                        <Icon name="ShoppingCart" size={18} className="mr-2" />
+                        В корзину
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="py-16 bg-muted">
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <Card className="text-center">
+                  <CardHeader>
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="ShieldCheck" size={32} className="text-primary" />
+                    </div>
+                    <CardTitle>Оригинальные запчасти</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Только сертифицированные детали CLAAS с гарантией
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="text-center">
+                  <CardHeader>
+                    <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="Truck" size={32} className="text-secondary" />
+                    </div>
+                    <CardTitle>Быстрая доставка</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Доставка по всей России в течение 1-3 дней
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="text-center">
+                  <CardHeader>
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="Headphones" size={32} className="text-primary" />
+                    </div>
+                    <CardTitle>Поддержка 24/7</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Наши специалисты помогут с выбором запчасти
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {activeSection === 'catalog' && (
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8">Каталог товаров</h2>
+            <div className="mb-8">
+              <Input 
+                placeholder="Поиск по названию или номеру запчасти" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="max-w-xl"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {filteredParts.map(part => (
+                <Card key={part.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="aspect-square bg-muted relative">
+                    <img 
+                      src={part.image} 
+                      alt={part.name}
+                      className="w-full h-full object-cover"
+                    />
+                    {!part.inStock && (
+                      <Badge variant="destructive" className="absolute top-2 right-2">
+                        Под заказ
+                      </Badge>
+                    )}
+                    {part.inStock && (
+                      <Badge className="absolute top-2 right-2 bg-primary">
+                        В наличии
+                      </Badge>
+                    )}
                   </div>
-                  <Button 
-                    onClick={() => addToCart(part)}
-                    disabled={!part.inStock}
-                    className="w-full"
-                  >
-                    <Icon name="ShoppingCart" size={18} className="mr-2" />
-                    В корзину
-                  </Button>
-                </CardFooter>
+                  <CardHeader>
+                    <CardTitle className="text-base">{part.name}</CardTitle>
+                    <p className="text-xs text-muted-foreground font-mono">{part.partNumber}</p>
+                    <Badge variant="outline" className="w-fit text-xs">{part.category}</Badge>
+                  </CardHeader>
+                  <CardFooter className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-xl font-bold text-primary">
+                        {part.price.toLocaleString('ru-RU')} ₽
+                      </span>
+                    </div>
+                    <Button 
+                      onClick={() => addToCart(part)}
+                      disabled={!part.inStock}
+                      className="w-full"
+                    >
+                      <Icon name="ShoppingCart" size={18} className="mr-2" />
+                      В корзину
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeSection === 'about' && (
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="text-3xl font-bold mb-8">О компании CLASS DETAIL</h2>
+            <div className="space-y-6 text-lg">
+              <p>
+                Компания CLASS DETAIL работает на рынке запасных частей для сельскохозяйственной техники с 2010 года.
+              </p>
+              <p>
+                Мы специализируемся на поставке оригинальных запчастей для комбайнов, тракторов и другой сельхозтехники CLAAS различных производителей. Работаем напрямую с поставщиками, что позволяет нам гарантировать подлинность и качество всех деталей.
+              </p>
+              <p>
+                В нашем ассортименте более 50 000 наименований запасных частей. Мы поможем подобрать нужную деталь по VIN-номеру техники или каталожному номеру запчасти.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">14+</div>
+                  <div className="text-muted-foreground">лет на рынке</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">50K+</div>
+                  <div className="text-muted-foreground">запчастей</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">5K+</div>
+                  <div className="text-muted-foreground">клиентов</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">100%</div>
+                  <div className="text-muted-foreground">оригинал</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeSection === 'contacts' && (
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="text-3xl font-bold mb-8">Наши контакты</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <Icon name="MapPin" size={24} className="text-primary flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold mb-1">Адрес склада</h3>
+                    <p className="text-muted-foreground">
+                      г. Москва, Промышленная ул., д. 15, стр. 3<br />
+                      Ежедневно с 9:00 до 18:00
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <Icon name="Phone" size={24} className="text-primary flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold mb-1">Телефон</h3>
+                    <p className="text-muted-foreground">
+                      +7 (495) 123-45-67<br />
+                      +7 (800) 555-35-35 (бесплатно по России)
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <Icon name="Mail" size={24} className="text-primary flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold mb-1">Email</h3>
+                    <p className="text-muted-foreground">
+                      info@class-detail.ru<br />
+                      sales@class-detail.ru
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <Icon name="Clock" size={24} className="text-primary flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold mb-1">Режим работы</h3>
+                    <p className="text-muted-foreground">
+                      Пн-Пт: 9:00 - 18:00<br />
+                      Сб-Вс: 10:00 - 16:00
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Напишите нам</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Input placeholder="Ваше имя" />
+                  <Input type="tel" placeholder="Телефон" />
+                  <Input type="email" placeholder="Email" />
+                  <Input placeholder="Тема сообщения" />
+                  <Button className="w-full">Отправить</Button>
+                </CardContent>
               </Card>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="ShieldCheck" size={32} className="text-primary" />
-                </div>
-                <CardTitle>Оригинальные запчасти</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Только сертифицированные детали CLAAS с гарантией
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="Truck" size={32} className="text-secondary" />
-                </div>
-                <CardTitle>Быстрая доставка</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Доставка по всей России в течение 1-3 дней
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="Headphones" size={32} className="text-primary" />
-                </div>
-                <CardTitle>Поддержка 24/7</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Наши специалисты помогут с выбором запчасти
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <footer className="bg-primary text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-2xl mb-4">CLASS DETAIL</h3>
+              <h3 className="font-bold text-2xl mb-4 text-secondary">CLASS DETAIL</h3>
               <p className="text-sm opacity-90">
                 Надёжный поставщик оригинальных запчастей для сельхозтехники CLAAS
               </p>
