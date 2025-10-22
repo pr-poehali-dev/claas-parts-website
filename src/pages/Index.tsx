@@ -130,17 +130,6 @@ export default function Index() {
         }}
       >
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <div className="flex items-center gap-6 text-white">
-            <div className="flex items-center gap-2">
-              <Icon name="Mail" size={18} />
-              <span className="text-sm">info@class-detail.ru</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Icon name="Phone" size={18} />
-              <span className="text-sm">+7 (495) 123-45-67</span>
-            </div>
-          </div>
-          
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="secondary" size="icon" className="relative">
@@ -194,6 +183,17 @@ export default function Index() {
               )}
             </SheetContent>
           </Sheet>
+          
+          <div className="flex items-center gap-6 text-white">
+            <div className="flex items-center gap-2">
+              <Icon name="Mail" size={18} />
+              <span className="text-sm">info@class-detail.ru</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icon name="Phone" size={18} />
+              <span className="text-sm">+7 (495) 123-45-67</span>
+            </div>
+          </div>
         </div>
 
         <div className="container mx-auto px-4">
