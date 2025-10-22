@@ -111,7 +111,7 @@ export default function Index() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-8">
               <div className="text-2xl font-bold text-secondary">
-                CLAAS
+                CLASS DETAL
               </div>
               <nav className="hidden md:flex gap-6">
                 <button 
@@ -210,10 +210,10 @@ export default function Index() {
             <div className="container mx-auto px-4">
               <div className="max-w-3xl">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  Оригинальные запчасти CLAAS
+                  Запчасти для сельхозтехники
                 </h1>
                 <p className="text-lg mb-8 opacity-90">
-                  Широкий ассортимент запасных частей для сельскохозяйственной техники CLAAS. Гарантия качества и быстрая доставка по всей России.
+                  Широкий ассортимент запасных частей для комбайнов, тракторов и другой сельскохозяйственной техники. Гарантия качества и быстрая доставка по всей России.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 max-w-xl">
                   <Input 
@@ -401,10 +401,10 @@ export default function Index() {
             <h1 className="text-4xl font-bold mb-8">О компании</h1>
             <div className="space-y-6 text-lg">
               <p>
-                Мы являемся официальным дилером запасных частей для сельскохозяйственной техники CLAAS с 2010 года.
+                Компания CLASS DETAL работает на рынке запасных частей для сельскохозяйственной техники с 2010 года.
               </p>
               <p>
-                Наша компания специализируется на поставке оригинальных запчастей для комбайнов, тракторов и другой техники CLAAS. Мы работаем напрямую с производителем, что позволяет нам гарантировать подлинность и качество всех деталей.
+                Наша компания специализируется на поставке оригинальных запчастей для комбайнов, тракторов и другой сельхозтехники различных производителей. Мы работаем напрямую с поставщиками, что позволяет нам гарантировать подлинность и качество всех деталей.
               </p>
               <p>
                 В нашем ассортименте более 50 000 наименований запасных частей. Мы поможем подобрать нужную деталь по VIN-номеру техники или каталожному номеру запчасти.
@@ -526,8 +526,8 @@ export default function Index() {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <p className="text-muted-foreground">
-                      info@claas-parts.ru<br />
-                      sales@claas-parts.ru
+                      info@class-detal.ru<br />
+                      sales@class-detal.ru
                     </p>
                   </div>
                 </div>
@@ -564,9 +564,9 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-lg mb-4 text-secondary">CLAAS</h3>
+              <h3 className="font-bold text-lg mb-4 text-secondary">CLASS DETAL</h3>
               <p className="text-sm text-muted-foreground">
-                Официальный поставщик оригинальных запчастей для сельхозтехники
+                Надёжный поставщик оригинальных запчастей для сельхозтехники
               </p>
             </div>
             <div>
@@ -591,13 +591,13 @@ export default function Index() {
               <h4 className="font-semibold mb-4">Контакты</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>+7 (495) 123-45-67</li>
-                <li>info@claas-parts.ru</li>
+                <li>info@class-detal.ru</li>
                 <li>Москва, Промышленная 15</li>
               </ul>
             </div>
           </div>
           <div className="border-t pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2024 CLAAS Parts Store. Все права защищены.</p>
+            <p>© 2024 CLASS DETAL. Все права защищены.</p>
           </div>
         </div>
       </footer>
